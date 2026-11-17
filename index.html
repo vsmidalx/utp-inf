@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio 2 - Psicología Experimental | UTP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js para gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Inter y Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        utp: {
+                            red: '#C8102E',
+                            darkred: '#9E0B23',
+                            black: '#111827',
+                            gray: '#F3F4F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+        .tab-active {
+            background-color: #C8102E;
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(200, 16, 46, 0.35);
+        }
+        .card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
+        }
+        .fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Personalización de scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-utp-red selection:text-white">
+
+    <!-- BARRA SUPERIOR / ENCABEZADO ACADÉMICO UTP -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Logo UTP y Facultad -->
+                <div class="flex items-center gap-4">
+                    <!-- Logo estilo UTP generado con CSS/HTML limpio -->
+                    <div class="flex items-center font-display font-extrabold text-xl tracking-tighter select-none shrink-0 shadow-sm rounded-lg overflow-hidden">
+                        <span class="bg-utp-red text-white px-2.5 py-1.5">U</span>
+                        <span class="bg-utp-black text-white px-2.5 py-1.5">T</span>
+                        <span class="bg-utp-red text-white px-2.5 py-1.5">P</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-bold uppercase tracking-wider text-utp-red bg-red-50 px-2.5 py-0.5 rounded-full border border-red-100">
+                                Facultad de Humanidades • Psicología
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                                Portafolio 2
+                            </span>
+                        </div>
+                        <h1 class="font-display font-bold text-slate-900 text-base sm:text-lg leading-tight mt-1">
+                            Psicología Experimental
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Datos de Docente y Estudiante -->
+                <div class="flex flex-wrap items-center gap-3 sm:gap-5 text-xs sm:text-sm bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200/80">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-700 shrink-0">
+                            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-slate-400 font-medium leading-none">Docente</p>
+                            <p class="font-semibold text-slate-800 leading-tight mt-0.5">Diana E. Núñez Calderón</p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block h-6 w-px bg-slate-200"></div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-red-100 flex items-center justify-center text-utp-red shrink-0">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-slate-400 font-medium leading-none">Integrante</p>
+                            <p class="font-semibold text-slate-800 leading-tight mt-0.5">Daniela A. Sosa Medina</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER PRINCIPAL DEL ESTUDIO -->
+    <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-utp-darkred text-white relative overflow-hidden">
+        <!-- Elementos decorativos de fondo -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-utp-red blur-3xl"></div>
+            <div class="absolute bottom-0 left-10 w-72 h-72 rounded-full bg-white blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-11 relative z-10">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-xs font-medium text-red-200 mb-3">
+                    <i data-lucide="flask-conical" class="w-3.5 h-3.5 text-utp-red"></i>
+                    <span>Simulación Conductual en CyberRat • Condicionamiento Operante</span>
+                </div>
+                <h2 class="font-display text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                    RF y RV en la adquisición de conducta de las ratas mediante el programa CyberRat
+                </h2>
+                <p class="mt-3 text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed">
+                    Análisis experimental comparativo sobre la frecuencia de presión de palanca en dos sujetos virtuales (<strong class="text-white">Kahbiti 001</strong> y <strong class="text-white">TopRoad 001</strong>) bajo programas de <span class="text-red-300 font-semibold">Razón Fija (RF5)</span> y <span class="text-sky-300 font-semibold">Razón Variable (RV5)</span> tras entrenamiento continuo (CRF).
+                </p>
+            </div>
+
+            <!-- Tarjetas KPI Rápidas -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-7">
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4">
+                    <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
+                        <span>Total Sesiones</span>
+                        <i data-lucide="calendar-check" class="w-4 h-4 text-red-300"></i>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-extrabold mt-1">18 <span class="text-xs font-normal text-slate-300">(9 c/u)</span></p>
+                    <p class="text-[11px] text-slate-300 mt-1">60 min por sesión virtual</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4">
+                    <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
+                        <span>Privación y Refuerzo</span>
+                        <i data-lucide="droplet" class="w-4 h-4 text-sky-300"></i>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-extrabold mt-1">23h <span class="text-xs font-normal text-slate-300">/ 0.1 ml</span></p>
+                    <p class="text-[11px] text-slate-300 mt-1">Privación de agua + refuerzo líquido</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4">
+                    <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
+                        <span>Pico Máximo RF5</span>
+                        <i data-lucide="trending-up" class="w-4 h-4 text-emerald-300"></i>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-extrabold mt-1 text-emerald-300">1,074</p>
+                    <p class="text-[11px] text-slate-300 mt-1">Presiones (Kahbiti 001 - Sesión 9)</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4">
+                    <div class="flex items-center justify-between text-slate-300 text-xs font-medium">
+                        <span>Pico Máximo RV5</span>
+                        <i data-lucide="activity" class="w-4 h-4 text-amber-300"></i>
+                    </div>
+                    <p class="font-display text-2xl sm:text-3xl font-extrabold mt-1 text-amber-300">786</p>
+                    <p class="text-[11px] text-slate-300 mt-1">Presiones (TopRoad 001 - Sesión 9)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAVEGACIÓN POR PESTAÑAS INTERACTIVAS (ESTILO CANVA / PANEL DE ESTUDIO) -->
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200/80 flex overflow-x-auto gap-1.5 no-scrollbar" role="tablist">
+            <button onclick="switchTab('all')" id="tab-all" class="tab-btn tab-active flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                <span>Vista Completa (Infografía)</span>
+            </button>
+            <button onclick="switchTab('problema')" id="tab-problema" class="tab-btn text-slate-600 hover:bg-slate-100 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <i data-lucide="target" class="w-4 h-4"></i>
+                <span>1. Problema y Objetivos</span>
+            </button>
+            <button onclick="switchTab('teoria')" id="tab-teoria" class="tab-btn text-slate-600 hover:bg-slate-100 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>2. Marco Teórico</span>
+            </button>
+            <button onclick="switchTab('metodologia')" id="tab-metodologia" class="tab-btn text-slate-600 hover:bg-slate-100 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                <span>3. Metodología y Ética</span>
+            </button>
+            <button onclick="switchTab('resultados')" id="tab-resultados" class="tab-btn text-slate-600 hover:bg-slate-100 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                <span>4. Resultados y Gráficos</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+        <!-- SECCIÓN 1: PROBLEMA, OBJETIVOS E HIPÓTESIS -->
+        <section id="sec-problema" class="content-section fade-in">
+            <div class="flex items-center gap-2.5 mb-4">
+                <span class="w-8 h-8 rounded-xl bg-utp-red text-white flex items-center justify-center font-display font-bold text-sm shadow-sm">01</span>
+                <h3 class="font-display text-xl font-bold text-slate-900">Planteamiento del Problema, Objetivos e Hipótesis</h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <!-- Tarjeta Problema -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-red-50 text-utp-red flex items-center justify-center mb-4">
+                            <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-utp-red">Formulación del Problema</span>
+                        <h4 class="font-display font-bold text-lg text-slate-900 mt-1">¿Cuál es la incógnita central?</h4>
+                        <p class="mt-3 text-slate-600 text-sm leading-relaxed bg-slate-50 p-3.5 rounded-xl border-l-4 border-utp-red italic">
+                            "¿Cómo se determinan las diferencias en la conducta de un sujeto con programa de Razón Fija 5 (RF5), frente a otro sujeto con un programa de Razón Variable 5 (RV5)?"
+                        </p>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 pt-3 border-t border-slate-100">
+                        Enfoque: Ejecución de respuesta previamente establecida mediante entrenamiento continuo (CRF).
+                    </p>
+                </div>
+
+                <!-- Tarjeta Objetivos -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm card-hover">
+                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-4">
+                        <i data-lucide="crosshair" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Propósito del Estudio</span>
+                    <h4 class="font-display font-bold text-lg text-slate-900 mt-1">Objetivos de Investigación</h4>
+                    
+                    <div class="mt-3 space-y-3 text-sm">
+                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/60">
+                            <p class="font-bold text-slate-900 text-xs uppercase mb-1">Objetivo General</p>
+                            <p class="text-slate-600 leading-snug">Determinar las diferencias conductuales (frecuencia de presión de palanca) entre RF5 y RV5 en CyberRat.</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800 text-xs uppercase mb-1.5">Objetivos Específicos</p>
+                            <ul class="space-y-1.5 text-slate-600 text-xs">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-utp-red shrink-0 mt-0.5"></i>
+                                    <span>Establecer 1 sesión de <strong>Línea Base</strong> en ambos sujetos.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-utp-red shrink-0 mt-0.5"></i>
+                                    <span>Aplicar 5 sesiones de <strong>Reforzamiento Continuo (CRF)</strong>.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-utp-red shrink-0 mt-0.5"></i>
+                                    <span>Aplicar 3 sesiones de <strong>RF5 (Kahbiti)</strong> y 3 de <strong>RV5 (TopRoad)</strong> y comparar resultados.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Hipótesis y Variables -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4">
+                            <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Predicción y Variables</span>
+                        <h4 class="font-display font-bold text-lg text-slate-900 mt-1">Hipótesis (H1) y Variables</h4>
+                        <p class="mt-2.5 text-slate-600 text-sm leading-relaxed">
+                            <strong class="text-slate-900">Hipótesis General (H1):</strong> Existen diferencias significativas; se espera que el sujeto expuesto a <span class="font-semibold text-sky-700">RV5</span> presente mayor frecuencia y constancia que el sujeto en <span class="font-semibold text-utp-red">RF5</span>.
+                        </p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-red-50/70 p-2.5 rounded-xl border border-red-100">
+                            <span class="font-bold text-utp-red block">Var. Independiente</span>
+                            <span class="text-slate-700">Programa de reforzamiento (RF5 vs RV5)</span>
+                        </div>
+                        <div class="bg-sky-50/70 p-2.5 rounded-xl border border-sky-100">
+                            <span class="font-bold text-sky-700 block">Var. Dependiente</span>
+                            <span class="text-slate-700">Frecuencia de presión de palanca</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: MARCO TEÓRICO ESENCIAL -->
+        <section id="sec-teoria" class="content-section fade-in">
+            <div class="flex items-center gap-2.5 mb-4">
+                <span class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-display font-bold text-sm shadow-sm">02</span>
+                <h3 class="font-display text-xl font-bold text-slate-900">Marco Teórico Esencial</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Base 1 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs">Fundamento</span>
+                        <i data-lucide="brain" class="w-5 h-5 text-slate-400"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-base text-slate-900">Condicionamiento Operante</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Skinner (1938) • Ferster & Skinner (1957)</p>
+                    <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                        Proceso de aprendizaje donde la probabilidad de que una conducta vuelva a emitirse depende directamente de las consecuencias (reforzadores) que le siguen.
+                    </p>
+                </div>
+
+                <!-- Base 2 -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs">Fase Previa (CRF)</span>
+                        <i data-lucide="repeat" class="w-5 h-5 text-emerald-500"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-base text-slate-900">Reforzamiento Continuo</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Relación 1 : 1</p>
+                    <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                        <strong>Cada respuesta</strong> emitida recibe inmediatamente un reforzador. Ideal para instaurar y consolidar una conducta nueva antes de pasar a programas intermitentes.
+                    </p>
+                </div>
+
+                <!-- Base 3 -->
+                <div class="bg-white rounded-2xl p-5 border-t-4 border-t-utp-red border-x border-b border-slate-200/80 shadow-sm card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-lg bg-red-50 text-utp-red font-bold text-xs">Sujeto 1 • RF5</span>
+                        <i data-lucide="pause-circle" class="w-5 h-5 text-utp-red"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-base text-slate-900">Razón Fija 5 (RF5)</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Requisito Constante</p>
+                    <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                        El reforzador se entrega tras exactamente <strong>5 respuestas</strong>. Se caracteriza por altas tasas seguidas de breves <em>pausas post-reforzamiento</em> (López et al., 1999).
+                    </p>
+                </div>
+
+                <!-- Base 4 -->
+                <div class="bg-white rounded-2xl p-5 border-t-4 border-t-sky-600 border-x border-b border-slate-200/80 shadow-sm card-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700 font-bold text-xs">Sujeto 2 • RV5</span>
+                        <i data-lucide="zap" class="w-5 h-5 text-sky-600"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-base text-slate-900">Razón Variable 5 (RV5)</h4>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Promedio Impredecible</p>
+                    <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                        El reforzador se entrega tras un número cambiante de respuestas cuyo promedio es <strong>5</strong>. Al ser impredecible, genera tasas altas y sostenidas sin pausas marcadas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: METODOLOGÍA Y ÉTICA -->
+        <section id="sec-metodologia" class="content-section fade-in">
+            <div class="flex items-center gap-2.5 mb-4">
+                <span class="w-8 h-8 rounded-xl bg-utp-red text-white flex items-center justify-center font-display font-bold text-sm shadow-sm">03</span>
+                <h3 class="font-display text-xl font-bold text-slate-900">Diseño Metodológico y Aspectos Éticos</h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <!-- Esquema Experimental (7 cols) -->
+                <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                    <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+                        <div>
+                            <h4 class="font-display font-bold text-lg text-slate-900">Diseño Experimental Comparativo (18 Sesiones)</h4>
+                            <p class="text-xs text-slate-500">Condiciones controladas: Privación de agua 23h • Reforzador: 0.1 ml agua • Duración: 60 min/sesión</p>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 text-slate-700 px-3 py-1 rounded-lg border border-slate-200">
+                            G: O1 — X — O2
+                        </span>
+                    </div>
+
+                    <!-- Sujetos Cards -->
+                    <div class="space-y-4">
+                        <!-- Kahbiti 001 -->
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-utp-red text-white flex items-center justify-center font-bold text-xs">S1</span>
+                                    <div>
+                                        <h5 class="font-bold text-slate-900 text-sm">Kahbiti 001 <span class="text-xs font-normal text-slate-500">(Peso: 230g)</span></h5>
+                                        <p class="text-[11px] text-slate-500">Grupo Experimental: Razón Fija 5 (RF5)</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold bg-red-100 text-utp-red px-2.5 py-1 rounded-full">9 Sesiones</span>
+                            </div>
+                            <!-- Línea de tiempo de fases -->
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div class="bg-white p-2 rounded-lg border border-slate-200">
+                                    <span class="block font-bold text-slate-700">Sesión 1</span>
+                                    <span class="text-[11px] text-slate-500">Línea Base (60m)</span>
+                                </div>
+                                <div class="bg-white p-2 rounded-lg border border-slate-200">
+                                    <span class="block font-bold text-emerald-700">Sesiones 2 - 6</span>
+                                    <span class="text-[11px] text-slate-500">5 Sesiones CRF</span>
+                                </div>
+                                <div class="bg-red-50 p-2 rounded-lg border border-red-200">
+                                    <span class="block font-bold text-utp-red">Sesiones 7 - 9</span>
+                                    <span class="text-[11px] text-utp-red font-medium">3 Sesiones RF5</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TopRoad 001 -->
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-xs">S2</span>
+                                    <div>
+                                        <h5 class="font-bold text-slate-900 text-sm">TopRoad 001 <span class="text-xs font-normal text-slate-500">(Peso: 250g)</span></h5>
+                                        <p class="text-[11px] text-slate-500">Grupo Experimental: Razón Variable 5 (RV5)</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold bg-sky-100 text-sky-700 px-2.5 py-1 rounded-full">9 Sesiones</span>
+                            </div>
+                            <!-- Línea de tiempo de fases -->
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                <div class="bg-white p-2 rounded-lg border border-slate-200">
+                                    <span class="block font-bold text-slate-700">Sesión 1</span>
+                                    <span class="text-[11px] text-slate-500">Línea Base (60m)</span>
+                                </div>
+                                <div class="bg-white p-2 rounded-lg border border-slate-200">
+                                    <span class="block font-bold text-emerald-700">Sesiones 2 - 6</span>
+                                    <span class="text-[11px] text-slate-500">5 Sesiones CRF</span>
+                                </div>
+                                <div class="bg-sky-50 p-2 rounded-lg border border-sky-200">
+                                    <span class="block font-bold text-sky-700">Sesiones 7 - 9</span>
+                                    <span class="text-[11px] text-sky-700 font-medium">3 Sesiones RV5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aspectos Éticos (5 cols) -->
+                <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2.5 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Compromiso Bioético</span>
+                                <h4 class="font-display font-bold text-lg">Aspectos Éticos y Bienestar Animal</h4>
+                            </div>
+                        </div>
+
+                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                            Las ratas poseen sistemas nerviosos complejos capaces de experimentar estrés y miedo. El uso del simulador digital <strong class="text-white">CyberRat</strong> elimina el sufrimiento animal sin sacrificar rigor científico.
+                        </p>
+
+                        <div class="space-y-3">
+                            <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+                                <p class="font-bold text-xs text-emerald-300 uppercase">Ley N° 27265 (Perú)</p>
+                                <p class="text-xs text-slate-200 mt-1 leading-relaxed">
+                                    Ley de Protección y Bienestar Animal: CyberRat permite cumplir los estándares éticos evitando prácticas invasivas en roedores vivos.
+                                </p>
+                            </div>
+                            <div class="bg-white/10 p-3.5 rounded-xl border border-white/10">
+                                <p class="font-bold text-xs text-emerald-300 uppercase">Ley N° 30407 (Perú)</p>
+                                <p class="text-xs text-slate-200 mt-1 leading-relaxed">
+                                    Promueve el reemplazo y uso de <strong>métodos alternativos</strong> a la experimentación con animales vivos en la enseñanza universitaria.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                        <span>Principio de las 3R: Reemplazo</span>
+                        <span class="text-emerald-400 font-semibold">100% Simulación Digital</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: RESULTADOS CLAVE Y GRÁFICOS INTERACTIVOS -->
+        <section id="sec-resultados" class="content-section fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-display font-bold text-sm shadow-sm">04</span>
+                    <h3 class="font-display text-xl font-bold text-slate-900">Resultados Experimentales y Análisis Gráfico</h3>
+                </div>
+                <span class="text-xs font-medium text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200 self-start sm:self-auto">
+                    Pasa el cursor o toca los gráficos para ver valores exactos
+                </span>
+            </div>
+
+            <!-- Gráficos Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Gráfico 1: Línea Base (5 columnas) -->
+                <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Sesión 1 (60 min)</span>
+                            <span class="text-xs font-semibold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full">Conductas Base</span>
+                        </div>
+                        <h4 class="font-display font-bold text-lg text-slate-900">Línea Base: Kahbiti vs. TopRoad</h4>
+                        <p class="text-xs text-slate-500 mt-1">Registro inicial de conductas exploratorias y presiones espontáneas.</p>
+                    </div>
+
+                    <div class="relative h-64 w-full my-4">
+                        <canvas id="baselineChart"></canvas>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-xs text-slate-600 space-y-1">
+                        <p><strong class="text-utp-red">Kahbiti 001:</strong> Predominó pararse en dos patas (128) y husmear (42); logró <strong>61 presiones</strong> de palanca.</p>
+                        <p><strong class="text-sky-700">TopRoad 001:</strong> Pararse en dos patas (107) y husmear (30); alcanzó <strong>71 presiones</strong> iniciales.</p>
+                    </div>
+                </div>
+
+                <!-- Gráfico 2: Evolución Sesiones 2 a 9 (7 columnas) -->
+                <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-utp-red">Sesiones 2 a 9</span>
+                                <span class="text-xs font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">CRF → RF5 / RV5</span>
+                            </div>
+                            <h4 class="font-display font-bold text-lg text-slate-900">Evolución de Presión de Palanca</h4>
+                        </div>
+                        <!-- Botón filtro interactivo en gráfico -->
+                        <div class="flex gap-1.5 bg-slate-100 p-1 rounded-xl self-start">
+                            <button onclick="filterEvolutionChart('all')" id="btn-evo-all" class="evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition">Todas (S2-S9)</button>
+                            <button onclick="filterEvolutionChart('ratio')" id="btn-evo-ratio" class="evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">Fase Razón (S7-S9)</button>
+                        </div>
+                    </div>
+
+                    <div class="relative h-64 sm:h-72 w-full my-4">
+                        <canvas id="evolutionChart"></canvas>
+                    </div>
+
+                    <!-- Tabla compacta de datos reales -->
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                        <table class="w-full text-center text-xs">
+                            <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                                <tr>
+                                    <th class="py-2 px-2 text-left">Sujeto</th>
+                                    <th class="py-2 px-1.5 bg-emerald-50/60">S2</th>
+                                    <th class="py-2 px-1.5 bg-emerald-50/60">S3</th>
+                                    <th class="py-2 px-1.5 bg-emerald-50/60">S4</th>
+                                    <th class="py-2 px-1.5 bg-emerald-50/60">S5</th>
+                                    <th class="py-2 px-1.5 bg-emerald-50/60">S6</th>
+                                    <th class="py-2 px-1.5 bg-amber-50 font-extrabold text-slate-900">S7</th>
+                                    <th class="py-2 px-1.5 bg-amber-50 font-extrabold text-slate-900">S8</th>
+                                    <th class="py-2 px-1.5 bg-amber-50 font-extrabold text-slate-900">S9</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="py-2 px-2 text-left font-bold text-utp-red whitespace-nowrap">Kahbiti (RF5)</td>
+                                    <td class="py-2 px-1.5">151</td>
+                                    <td class="py-2 px-1.5">200</td>
+                                    <td class="py-2 px-1.5">197</td>
+                                    <td class="py-2 px-1.5">233</td>
+                                    <td class="py-2 px-1.5">239</td>
+                                    <td class="py-2 px-1.5 font-bold bg-red-50/60 text-utp-red">938</td>
+                                    <td class="py-2 px-1.5 font-bold bg-red-50/60 text-utp-red">1,010</td>
+                                    <td class="py-2 px-1.5 font-bold bg-red-50/60 text-utp-red">1,074</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-2 text-left font-bold text-sky-700 whitespace-nowrap">TopRoad (RV5)</td>
+                                    <td class="py-2 px-1.5">139</td>
+                                    <td class="py-2 px-1.5">185</td>
+                                    <td class="py-2 px-1.5">207</td>
+                                    <td class="py-2 px-1.5">225</td>
+                                    <td class="py-2 px-1.5">225</td>
+                                    <td class="py-2 px-1.5 font-bold bg-sky-50/60 text-sky-700">665</td>
+                                    <td class="py-2 px-1.5 font-bold bg-sky-50/60 text-sky-700">601</td>
+                                    <td class="py-2 px-1.5 font-bold bg-sky-50/60 text-sky-700">786</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HALLAZGO PRINCIPAL Y CONCLUSIONES CLAVE -->
+            <div class="mt-6 bg-white rounded-2xl p-6 border-l-4 border-l-utp-red border border-slate-200/80 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-red-50 text-utp-red flex items-center justify-center shrink-0">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-bold uppercase tracking-wider text-utp-red">Hallazgo Principal y Discusión</span>
+                        <h4 class="font-display font-bold text-lg text-slate-900">
+                            Salto exponencial de respuestas al transicionar de CRF a programas de Razón (RF5 y RV5)
+                        </h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            En ambos sujetos, la tasa de presión de palanca se disparó drásticamente a partir de la <strong>Sesión 7</strong> al exigir mayor esfuerzo por reforzador. Aunque la literatura clásica suele atribuir mayor tasa sostenida al programa RV5, en esta simulación específica <strong>Kahbiti 001 (RF5)</strong> alcanzó frecuencias absolutas superiores (<strong>938 → 1,010 → 1,074</strong> presiones, un incremento del ~349% respecto a su última sesión CRF) frente a <strong>TopRoad 001 (RV5)</strong> (<strong>665 → 601 → 786</strong> presiones), demostrando cómo las contingencias intermitentes de razón multiplican la emisión conductual una vez consolidada la respuesta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER ACADÉMICO -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-800">Universidad Tecnológica del Perú (UTP)</span>
+                <span>•</span>
+                <span>Psicología Experimental - Portafolio 2</span>
+            </div>
+            <div>
+                <span>Referencias base: Skinner (1938, 1953) • Ferster & Skinner (1957) • Reynolds (1968) • López et al. (1999)</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE INTERACTIVIDAD Y GRÁFICOS -->
+    <script>
+        // Inicializar iconos Lucide
+        lucide.createIcons();
+
+        // Sistema de pestañas interactivas
+        function switchTab(tabId) {
+            // Actualizar botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('tab-active');
+            activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+
+            // Mostrar/Ocultar secciones
+            const sections = document.querySelectorAll('.content-section');
+            if (tabId === 'all') {
+                sections.forEach(sec => {
+                    sec.classList.remove('hidden');
+                    sec.classList.remove('fade-in');
+                    void sec.offsetWidth; // trigger reflow
+                    sec.classList.add('fade-in');
+                });
+            } else {
+                sections.forEach(sec => {
+                    if (sec.id === 'sec-' + tabId) {
+                        sec.classList.remove('hidden');
+                        sec.classList.remove('fade-in');
+                        void sec.offsetWidth;
+                        sec.classList.add('fade-in');
+                    } else {
+                        sec.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        // Configuración global de Chart.js
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#64748B';
+
+        // 1. GRÁFICO DE LÍNEA BASE (Sesión 1)
+        const ctxBaseline = document.getElementById('baselineChart').getContext('2d');
+        const baselineChart = new Chart(ctxBaseline, {
+            type: 'bar',
+            data: {
+                labels: ['Dos patas', 'Husmea', 'Presión palanca', 'Acicala'],
+                datasets: [
+                    {
+                        label: 'Kahbiti 001 (S1)',
+                        data: [128, 42, 61, 3],
+                        backgroundColor: '#C8102E',
+                        borderRadius: 6,
+                        barPercentage: 0.75,
+                        categoryPercentage: 0.7
+                    },
+                    {
+                        label: 'TopRoad 001 (S2)',
+                        data: [107, 30, 71, 2],
+                        backgroundColor: '#0284C7',
+                        borderRadius: 6,
+                        barPercentage: 0.75,
+                        categoryPercentage: 0.7
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { usePointStyle: true, boxWidth: 8, font: { size: 11, weight: '600' } }
+                    },
+                    tooltip: {
+                        backgroundColor: '#0F172A',
+                        padding: 10,
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#F1F5F9' },
+                        ticks: { font: { size: 11 } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11, weight: '600' } }
+                    }
+                }
+            }
+        });
+
+        // 2. GRÁFICO DE EVOLUCIÓN (Sesiones 2 a 9)
+        const fullLabels = ['S2 (CRF)', 'S3 (CRF)', 'S4 (CRF)', 'S5 (CRF)', 'S6 (CRF)', 'S7 (Razón)', 'S8 (Razón)', 'S9 (Razón)'];
+        const kahbitiFull = [151, 200, 197, 233, 239, 938, 1010, 1074];
+        const toproadFull = [139, 185, 207, 225, 225, 665, 601, 786];
+
+        const ctxEvolution = document.getElementById('evolutionChart').getContext('2d');
+        const evolutionChart = new Chart(ctxEvolution, {
+            type: 'line',
+            data: {
+                labels: fullLabels,
+                datasets: [
+                    {
+                        label: 'Kahbiti 001 (CRF → RF5)',
+                        data: kahbitiFull,
+                        borderColor: '#C8102E',
+                        backgroundColor: 'rgba(200, 16, 46, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#C8102E',
+                        pointBorderColor: '#FFFFFF',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        tension: 0.25,
+                        fill: true
+                    },
+                    {
+                        label: 'TopRoad 001 (CRF → RV5)',
+                        data: toproadFull,
+                        borderColor: '#0284C7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0284C7',
+                        pointBorderColor: '#FFFFFF',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        tension: 0.25,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { usePointStyle: true, boxWidth: 8, font: { size: 11, weight: '600' } }
+                    },
+                    tooltip: {
+                        backgroundColor: '#0F172A',
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.parsed.y.toLocaleString()} presiones`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1200,
+                        grid: { color: '#F1F5F9' },
+                        title: {
+                            display: true,
+                            text: 'Frecuencia de presiones',
+                            font: { size: 11, weight: '600' }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 10.5, weight: '600' } }
+                    }
+                }
+            }
+        });
+
+        // Filtro interactivo para el gráfico de evolución
+        function filterEvolutionChart(mode) {
+            const btnAll = document.getElementById('btn-evo-all');
+            const btnRatio = document.getElementById('btn-evo-ratio');
+
+            if (mode === 'all') {
+                btnAll.className = 'evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition';
+                btnRatio.className = 'evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+                evolutionChart.data.labels = fullLabels;
+                evolutionChart.data.datasets[0].data = kahbitiFull;
+                evolutionChart.data.datasets[1].data = toproadFull;
+            } else {
+                btnRatio.className = 'evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition';
+                btnAll.className = 'evo-filter px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+                evolutionChart.data.labels = ['Sesión 7 (Razón)', 'Sesión 8 (Razón)', 'Sesión 9 (Razón)'];
+                evolutionChart.data.datasets[0].data = [938, 1010, 1074];
+                evolutionChart.data.datasets[1].data = [665, 601, 786];
+            }
+            evolutionChart.update();
+        }
+    </script>
+</body>
+</html>
